@@ -9,6 +9,18 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
 from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
+from langchain.chains import RetrievalQA
+from langchain.memory import ConversationBufferWindowMemory
+from dotenv import load_dotenv
+from langchain_groq import ChatGroq
+import os
+
+load_dotenv()
+#set the enviroment for groq
+
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+
+
 
 def Pdf_parsing(pdf_path:str):
     md_text_images = pymupdf4llm.to_markdown(
@@ -18,8 +30,6 @@ def Pdf_parsing(pdf_path:str):
         image_format="png",
         page_chunks=True
     )
-
-    # print(f"The content of the first page is {md_text_images[0]}")
 
     docs = []
     for page in md_text_images:
@@ -52,12 +62,34 @@ def textSplitter(documents,c_size=1200,c_overlap=200):
 
     return retriver
 
-    print("All set till here")
-    
 
+
+
+#qa chain
+def qa_chain(retriever):
+    LLM = ChatGroq(
+        api_key=GROQ_API_KEY,
+        model="meta-llama/llama-4-scout-17b-16e-instruct",
+        streaming=False,
+        verbose=True,
+        temperature=0.3
+    )
+    memory = ConversationBufferWindowMemory(k=10,return_messages=True)
+
+    qa=RetrievalQA.from_chain_type(
+        LLM,
+        chain_type="stuff",
+        retriever=retriever,
+        memory=memory,
+        return_source_documents=False
+    )
+
+    return qa
 
 if __name__ == "__main__":
     pdf_path = r"C:\Users\HP\Desktop\Voice-Base-Rag\Voice-Based-Rag\Deepseek.pdf"
     docs = Pdf_parsing(pdf_path=pdf_path)
     retriver=textSplitter(documents=docs)
-    print(retriver.invoke("What is deepseek r1?"))
+    chain = qa_chain(retriever=retriver)
+    response=chain.invoke("Whta is deepseek")
+    print(f"{response["result"]}")
