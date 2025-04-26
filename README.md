@@ -76,14 +76,6 @@ The app will be available at:
 
 ---
 
-## 📸 Demo Screenshot
-
-> (Add a screenshot of your Gradio app here later if you want. Example below)
-
-![Voice PDF Assistant Screenshot](demo-screenshot.png)
-
----
-
 ## 💬 Future Improvements (optional)
 
 - Add support for multiple PDFs
