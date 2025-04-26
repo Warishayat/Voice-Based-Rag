@@ -46,7 +46,6 @@ The app will **instantly generate answers** and **speak them out loud** — no d
 ├── Rag_voice.py           # Text-to-Speech functionality
 ```
 
-> **Note:** You must have `Speech_Query.py`, `Pdf_Vectors.py`, and `Rag_voice.py` files present and correctly implemented.
 
 ---
 
