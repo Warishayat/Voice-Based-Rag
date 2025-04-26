@@ -54,8 +54,8 @@ The app will **instantly generate answers** and **speak them out loud** — no d
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/voice-powered-pdf-assistant.git
-cd voice-powered-pdf-assistant
+git clone (https://github.com/Warishayat/Voice-Based-Rag)
+cd Voice-Based-Rag
 ```
 
 2. Install dependencies:
