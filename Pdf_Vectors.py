@@ -39,7 +39,7 @@ def Pdf_parsing(pdf_path:str):
     
     return docs
 
-def textSplitter(documents,c_size=1200,c_overlap=200):
+def textSplitter(documents,c_size=300,c_overlap=100):
     "Chunks docs into smaller points"
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size = c_size,
@@ -61,9 +61,6 @@ def textSplitter(documents,c_size=1200,c_overlap=200):
     )
 
     return retriver
-
-
-
 
 #qa chain
 def qa_chain(retriever):
